@@ -35,16 +35,6 @@ fn C3(theta: Degrees) -> Array2<f64> {
 }
 
 fn main() {
-    // let a = C1(Degrees(30.));
-    // println!("\n{:#?}\n", a);
-
-    // let b = C2(Degrees(30.));
-    // println!("\n{:#?}\n", b);
-
-    // let c = C3(Degrees(30.));
-    // println!("\n{:#?}\n", c);
-
-    let sol = C2(Degrees(-90.)) * C1(Degrees(90.));
-
+    let sol = C1(Degrees(90.)).dot(&C2(Degrees(-90.)));
     println!("{:#?}", sol);
 }
