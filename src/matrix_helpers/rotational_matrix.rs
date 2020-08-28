@@ -43,3 +43,26 @@ impl Mul for RotMatrix {
         res
     }
 }
+
+impl Mul for &RotMatrix {
+    type Output = RotMatrix;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        let mut res = RotMatrix::new(
+            vec![-999.;3],
+            vec![-999.; 3],
+            vec![-999.; 3]
+        );
+
+        for i in 0..3 {
+            for j in 0..3 {
+                let mut sum = 0.;
+                for k in 0..3 {
+                    sum += self.arr[i][k] * rhs.arr[k][j];
+                }
+                res.arr[i][j] = sum;
+            }
+        }
+        res
+    }
+}

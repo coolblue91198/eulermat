@@ -2,32 +2,53 @@ mod matrix_helpers;
 use matrix_helpers::{C1, C2, C3, Degrees, RotMatrix};
 use std::env;
 
-fn main() -> Result<(), String> {
+fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let val: Option<RotMatrix> = match &args[1][0..] {
-        "c1" => {
-            let angle = args[2].parse::<f64>().unwrap_or(0.);
+    let num_args = args.len() - 1;
 
-            Some(C1(Degrees(angle)))
-        },
+    if num_args % 2 == 0 {
+        let mut results:Vec<RotMatrix> = Vec::new();
 
-        &_ => None 
-    };
+        for i in 1..num_args {
+            let val = match &args[i].to_lowercase()[0..] {
+                "c1" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(C1(Degrees(angle)))
+                },
 
-    match val {
-        None => Err(String::from("Please enter Ci(angle) -  Where i is 1, 2, or 3 and angle is a floating point.")),
+                "c2" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(C2(Degrees(angle)))
+                }
 
-        Some(mat) => {
-            mat.print();
-            Ok(())
+                "c3" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(C3(Degrees(angle)))                    
+                }
+
+                &_ => None
+            };
+            
+            match val {
+                Some(mat) => results.push(mat),
+                None => ()
+            }
         }
-    }
 
-    // Ok(())
+        let res_len = results.len() - 1;
 
-    // let theta = &Degrees(35.);
+        match res_len > 0 {
+            true => {
+                for i in 0..results.len()-1 {
+                    results[i+1] = &results[i] * &results[i+1];
+                }
+                println!("{:}", res_len);
+                results[res_len].print();                      
+            },
 
-    // (C1(*theta) * C2(*t"heta) * C3(*theta)).print();
+            false => {println!("ITS FALSE!!")}
+        }
+    }   
 
 }

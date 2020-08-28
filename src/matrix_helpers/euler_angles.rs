@@ -3,10 +3,6 @@ use super::rotational_matrix::RotMatrix;
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub struct Degrees(pub f64);
 
-fn float_precision(x: f64) -> f64 {
-    (x * 100.0).round() / 100.0
-}
-
 pub fn C1(theta: Degrees) -> RotMatrix {
     let rad = theta.0.to_radians();
     RotMatrix::new(
