@@ -13,10 +13,10 @@ impl RotMatrix {
     }
 
     pub fn print(&self) {
-        // println!("\n");
-        println!("{:#?}  {:#?}  {:#?}", self.arr[0][0], self.arr[0][1], self.arr[0][2]);
-        println!("{:#?}  {:#?}  {:#?}", self.arr[1][0], self.arr[1][1], self.arr[1][2]);
-        println!("{:#?}  {:#?}  {:#?}", self.arr[2][0], self.arr[2][1], self.arr[2][2]);
+        println!("\n");
+        println!("{:.3}  {:.3}  {:.3}", self.arr[0][0], self.arr[0][1], self.arr[0][2]);
+        println!("{:.3}  {:.3}  {:.3}", self.arr[1][0], self.arr[1][1], self.arr[1][2]);
+        println!("{:.3}  {:.3}  {:.3}", self.arr[2][0], self.arr[2][1], self.arr[2][2]);
         println!("\n");
     }
 }

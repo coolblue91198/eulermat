@@ -1,5 +1,5 @@
-mod helpers;
-use helpers::{C1, C2, C3, Degrees};
+mod matrix_helpers;
+use matrix_helpers::{C1, C2, C3, Degrees};
 
 fn main() {
     let theta = &Degrees(35.);
