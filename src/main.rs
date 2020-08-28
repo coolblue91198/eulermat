@@ -1,6 +1,8 @@
 mod matrix_helpers;
-use matrix_helpers::{C1, C2, C3, Degrees, RotMatrix};
+use matrix_helpers::{c1, c2, c3, Degrees, RotMatrix};
 use std::env;
+
+#[allow(unused_comparisons)]
 
 fn main() -> Result<(), String> {
     let args: Vec<String> = env::args().collect();
@@ -14,17 +16,17 @@ fn main() -> Result<(), String> {
             let arg = match &args[i].to_lowercase()[0..] {
                 "c1" => {
                     let angle = args[i+1].parse::<f64>().unwrap_or(0.);
-                    Some(C1(Degrees(angle)))
+                    Some(c1(Degrees(angle)))
                 },
 
                 "c2" => {
                     let angle = args[i+1].parse::<f64>().unwrap_or(0.);
-                    Some(C2(Degrees(angle)))
+                    Some(c2(Degrees(angle)))
                 }
 
                 "c3" => {
                     let angle = args[i+1].parse::<f64>().unwrap_or(0.);
-                    Some(C3(Degrees(angle)))                    
+                    Some(c3(Degrees(angle)))                    
                 }
 
                 &_ => None

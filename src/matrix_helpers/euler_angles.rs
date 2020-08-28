@@ -3,7 +3,7 @@ use super::rotational_matrix::RotMatrix;
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub struct Degrees(pub f64);
 
-pub fn C1(theta: Degrees) -> RotMatrix {
+pub fn c1(theta: Degrees) -> RotMatrix {
     let rad = theta.0.to_radians();
     RotMatrix::new(
         vec![1.,           0.,            0.],
@@ -12,7 +12,7 @@ pub fn C1(theta: Degrees) -> RotMatrix {
     )
 }
 
-pub fn C2(theta: Degrees) -> RotMatrix {
+pub fn c2(theta: Degrees) -> RotMatrix {
     let rad = theta.0.to_radians();
     RotMatrix::new(
         vec![rad.cos(),   0., -(rad.sin())],
@@ -21,7 +21,7 @@ pub fn C2(theta: Degrees) -> RotMatrix {
     )
 }
 
-pub fn C3(theta: Degrees) -> RotMatrix {
+pub fn c3(theta: Degrees) -> RotMatrix {
     let rad = theta.0.to_radians();
     RotMatrix::new(
         vec![  rad.cos() ,    rad.sin(),    0.],
