@@ -1,5 +1,6 @@
 use super::rotational_matrix::RotMatrix;
 
+#[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub struct Degrees(pub f64);
 
 fn float_precision(x: f64) -> f64 {

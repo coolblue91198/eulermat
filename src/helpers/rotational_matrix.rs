@@ -1,5 +1,6 @@
 use std::ops::Mul;
 
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub struct RotMatrix {
     arr: Vec<Vec<f64>>
 }
