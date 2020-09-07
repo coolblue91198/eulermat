@@ -1,50 +1,73 @@
-use ndarray::prelude::*;
+mod matrix_helpers;
+use matrix_helpers::{c1, c2, c3, Degrees, RotMatrix};
+use std::env;
 
-struct Degrees(f64);
+#[allow(unused_comparisons)]
 
+fn main() -> Result<(), String> {
+    let args: Vec<String> = env::args().collect();
 
-fn float_precision(x: f64) -> f64{
-    (x * 100.0).round() / 100.0
+    let num_args = args.len() - 1;
+
+    if (num_args % 2 == 0) & (num_args > 0) {
+        let mut results:Vec<RotMatrix> = Vec::new();
+
+        for i in 1..num_args {
+            let arg = match &args[i].to_lowercase()[0..] {
+                "c1" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(c1(Degrees(angle)))
+                },
+
+                "c2" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(c2(Degrees(angle)))
+                }
+
+                "c3" => {
+                    let angle = args[i+1].parse::<f64>().unwrap_or(0.);
+                    Some(c3(Degrees(angle)))                    
+                }
+
+                &_ => None
+            };
+            
+            match arg {
+                Some(mat) => results.push(mat),
+                None => ()
+            }
+        }
+
+        let mut res_len = results.len();
+        if res_len > 0 {
+            res_len = res_len - 1;
+        }
+
+        let val = match res_len >= 0 {
+            true => {
+                for i in 0..results.len()-1 {
+                    results[i+1] = &results[i] * &results[i+1];
+                }
+                results[res_len].print();
+                Some(())
+            },
+
+            false => { None }
+        };
+        
+        match val {
+            Some(()) => Ok(()),
+            None => Err(String::from("\nInvalid Use! Pass rotations as separate, ordered arguments: C1(30.), C2(20.), etc.\n"))
+        }
+
+    }
+    else {
+        Err(String::from("\nInvalid Use! Pass rotations as separate, ordered arguments: C1(30.), C2(20.), etc.\n"))
+    }   
+
 }
 
-fn C1(theta: Degrees) -> Array2<f64> {
-    let rad = theta.0.to_radians();
-    let a1 = array![[1., 0., 0.],
-                                                [0., float_precision(rad.cos()), float_precision(rad.sin())],
-                                                [0., float_precision(-(rad.sin())), float_precision(rad.cos())]];
-    
-    a1
-}
-
-fn C2(theta: Degrees) -> Array2<f64> {
-    let rad = theta.0.to_radians();
-    let a1 = array![[float_precision(rad.cos()), 0., float_precision(-(rad.sin()))],
-                                                [0., 1., 0.],
-                                                [float_precision(rad.sin()), 0., float_precision(rad.cos())]];
-    
-    a1
-}
-
-fn C3(theta: Degrees) -> Array2<f64> {
-    let rad = theta.0.to_radians();
-    let a1 = array![[float_precision(rad.cos()), float_precision(rad.sin()), 0.],
-                                                [float_precision(-(rad.sin())), float_precision(rad.cos()), 0.],
-                                                [0., 0., 1.]];
-    
-    a1
-}
-
-fn main() {
-    // let a = C1(Degrees(30.));
-    // println!("\n{:#?}\n", a);
-
-    // let b = C2(Degrees(30.));
-    // println!("\n{:#?}\n", b);
-
-    // let c = C3(Degrees(30.));
-    // println!("\n{:#?}\n", c);
-
-    let sol = C2(Degrees(-90.)) * C1(Degrees(90.));
-
-    println!("{:#?}", sol);
-}
+// TODO: Route Errors to stderr instead of stdout
+// TODO: Write logic in separate file ?
+// TODO: Write tests
+// TODO: Double check error handling
